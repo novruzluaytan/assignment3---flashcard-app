@@ -1,5 +1,7 @@
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './styles/App.css';
 import React from'react';
+import './assests/navbar.jsx'
 import Home from './pages/homePage.jsx'
 import Flashcard from './pages/flashCard.jsx'
 import Contact from './pages/contact.jsx'
