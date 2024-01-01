@@ -1,7 +1,12 @@
-.navbar{
+.container{
+  width: 100%;
+  height:100vh;
+  background-color: beige;
+}
 
+.navbar{
   width:100%;
-  height:60px;
+  height:70px;
   display: flex;
   flex-direction: row;
   justify-content:space-evenly;

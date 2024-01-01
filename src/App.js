@@ -4,14 +4,17 @@ import './App.css';
 
 function App() {
   return (
-    <div className="navbar">
-      <div className="homePage">
-        Home Page
-      </div>
-      <div className="flashcard-app">
-        Flashcard
+    <div className="container">
+      <div className="navbar">
+        <div className="homePage">
+          Home Page
+        </div>
+        <div className="flashcard-app">
+          Flashcard
+        </div>
       </div>
     </div>
+
   );
 };
 
