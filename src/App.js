@@ -1,12 +1,18 @@
 import logo from './logo.svg';
+import './App.css';
 
 
 function App() {
   return (
-    <div>
-      React Js server has been started
+    <div className="navbar">
+      <div className="homePage">
+        Home Page
+      </div>
+      <div className="flashcard-app">
+        Flashcard
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default App;
