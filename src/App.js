@@ -1,17 +1,16 @@
 import './App.css';
-
+import React from'react';
 
 function App() {
   return (
-    <div className="container">
-      <div className="navbar">
-        <div className="homePage">
-          Home Page
-        </div>
-        <div className="flashcard-app">
-          Flashcard
-        </div>
-      </div>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/flashcard" element={<Flashcard />} />
+        </Routes>
+      </Router>
     </div>
 
   );
