@@ -1,7 +1,25 @@
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import '../styles/App.css';
-import React from'react';
+import '../assests/navbar.jsx';
 
-function homePage() {
+function HomePage() {
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await axios.get("http://localhost:3001/projects");
+                setProjects(response.data);
+            } catch (error) {
+                console.error("Error: ", error);
+            };
+        };
+
+        fetchProjects();
+    }, []);
+
+
     return (
        <container>
         <h1>Your Name - Portfolio</h1>
@@ -18,7 +36,7 @@ function homePage() {
             <li>
                 <strong>Project Name 1</strong> - Brief description of the project.
      
-                <a href="https://github.com/your-username/project1" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/your-username/project1">GitHub Repository</a>
    
             </li>
 
@@ -26,7 +44,7 @@ function homePage() {
             <li>
                 <strong>Project Name 2</strong> - Brief description of the project.
          
-                <a href="https://github.io/your-username/project2" target="_blank">GitHub Pages</a>
+                <a href="https://github.io/your-username/project2">GitHub Pages</a>
 
             </li>
 
@@ -36,4 +54,4 @@ function homePage() {
     );
   };
   
-  export default homePage;
+  export default HomePage;
