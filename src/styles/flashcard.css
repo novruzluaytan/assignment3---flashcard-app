@@ -1,0 +1,78 @@
+/* FlashcardApp.css */
+
+.flashcard-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .flashcards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flashcard {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: calc(33.33% - 20px);
+  }
+  
+  .lastModified {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Add your additional styling as needed */
+
+  
+
+
+
+
+
+/* Add this CSS to App.css */
+
+.search-container button {
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .search-container button.back-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .search-container button.back-button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid #f44336;
+  }
+  

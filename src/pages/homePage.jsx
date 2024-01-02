@@ -28,8 +28,8 @@ function HomePage() {
                 <h1>Aytan Novruzlu - Portfolio</h1>
                 <p>Welcome to my portfolio showcasing my projects!</p>
                 </header>
-                
-                <section>
+
+                <section className='intro'>
                 <h2>General Introduction</h2>
                 <p>
                     Hello! I am passionate about technology and enjoy working on various projects. This portfolio
