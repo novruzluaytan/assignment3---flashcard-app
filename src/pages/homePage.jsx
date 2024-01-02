@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/App.css';
-import '../assets/navbar.jsx';
+import Navbar from '../assets/Navbar.jsx'
+import '../styles/HomePage.css';
 
 function HomePage() {
     const [projects, setProjects] = useState([]);
@@ -22,37 +22,53 @@ function HomePage() {
 
     return (
         <>
-            <navbar />
-            <container>
-                <h1>Your Name - Portfolio</h1>
+            <Navbar />
+            <div className = "container">
+                <header>
+                <h1>Aytan Novruzlu - Portfolio</h1>
                 <p>Welcome to my portfolio showcasing my projects!</p>
+                </header>
+                
+                <section>
                 <h2>General Introduction</h2>
                 <p>
                     Hello! I am passionate about technology and enjoy working on various projects. This portfolio
                     provides an overview of the projects I have undertaken.
                 </p>
+                </section>
 
+                <section>
                 <h2>Projects</h2>
-                <ul>
+                <ol>
 
                     <li>
-                        <strong>Project Name 1</strong> - Brief description of the project.
-
-                        <a href="https://github.com/your-username/project1">GitHub Repository</a>
+                        <strong>1. Personal Digital Card</strong> 
+                        <div className="line">-</div>
+                        <a href="https://github.com/novruzluaytan/web-and-mobile" className='linkGithub'> GitHub Repository</a>
 
                     </li>
 
 
                     <li>
-                        <strong>Project Name 2</strong> - Brief description of the project.
+                        <strong>2. Fetching data from an API </strong> 
 
-                        <a href="https://github.io/your-username/project2">GitHub Pages</a>
+                        <div className="line">-</div>
+
+                        <a href="https://github.com/novruzluaytan/wm-assignment2" className='linkGithub'>  GitHub Repository</a>
 
                     </li>
 
-                </ul>
+                    <li>
+                        <strong>3. Flashcard App </strong> 
+                        <div className="line">-</div>
+                        <a href="https://github.com/novruzluaytan/assignment3---flashcard-app" className='linkGithub'>  GitHub Repository</a>
 
-            </container>
+                    </li>
+
+                </ol>
+                </section>
+
+            </div>
         </>
     );
 };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import FlashCard from '../pages/flashCard.jsx';
-import Navbar from '../assets/navbar.jsx'
+import FlashCard from './FlashCard.jsx';
 import axios from 'axios';
 import '../styles/flashcard.css'
 
@@ -24,7 +23,6 @@ function Cards() {
 
     return (
     <>
-        <Navbar />
         {cards.map((card) => (
             <FlashCard key={ card.id } {...card} />
         ))
