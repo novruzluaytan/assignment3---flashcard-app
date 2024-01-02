@@ -12,8 +12,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/flashcard" element={<Flashcard />} />
+          <Route path="/homePage" element={<Home />} />
+          <Route path="/flashCard" element={<Flashcard />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>

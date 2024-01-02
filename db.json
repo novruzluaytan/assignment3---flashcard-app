@@ -2,28 +2,78 @@
   "flashcards": [
     {
       "id": 1,
-      "question": "What is the capital of France?",
-      "answer": "Paris"
+      "question": "What is the capital of Japan?",
+      "answer": "Tokyo"
     },
     {
       "id": 2,
-      "question": "Who wrote 'Romeo and Juliet'?",
-      "answer": "William Shakespeare"
+      "question": "Who is the author of 'To Kill a Mockingbird'?",
+      "answer": "Harper Lee"
     },
     {
       "id": 3,
-      "question": "What is the powerhouse of the cell?",
-      "answer": "Mitochondria"
+      "question": "What is the largest planet in our solar system?",
+      "answer": "Jupiter"
     },
     {
       "id": 4,
-      "question": "What is the largest mammal?",
-      "answer": "Blue Whale"
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
     },
     {
       "id": 5,
-      "question": "In which year did the Titanic sink?",
-      "answer": "1912"
+      "question": "What is the currency of Brazil?",
+      "answer": "Brazilian Real"
+    },
+    {
+      "id": 6,
+      "question": "Who developed the theory of relativity?",
+      "answer": "Albert Einstein"
+    },
+    {
+      "id": 7,
+      "question": "In which year did the United States declare its independence?",
+      "answer": "1776"
+    },
+    {
+      "id": 8,
+      "question": "What is the capital of Australia?",
+      "answer": "Canberra"
+    },
+    {
+      "id": 9,
+      "question": "Who wrote '1984'?",
+      "answer": "George Orwell"
+    },
+    {
+      "id": 10,
+      "question": "What is the main ingredient in guacamole?",
+      "answer": "Avocado"
+    },
+    {
+      "id": 11,
+      "question": "Which planet is known as the Red Planet?",
+      "answer": "Mars"
+    },
+    {
+      "id": 12,
+      "question": "Who played Neo in 'The Matrix'?",
+      "answer": "Keanu Reeves"
+    },
+    {
+      "id": 13,
+      "question": "What is the longest river in the world?",
+      "answer": "Nile River"
+    },
+    {
+      "id": 14,
+      "question": "Who discovered penicillin?",
+      "answer": "Alexander Fleming"
+    },
+    {
+      "id": 15,
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
     }
   ]
 }
