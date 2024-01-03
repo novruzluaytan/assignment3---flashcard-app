@@ -205,8 +205,6 @@ const FlashcardApp = () => {
     }
   };
 
-
-
   const goBack = () => {
     setFlashcards(originalFlashcards);
     setShowBackButton(false);
