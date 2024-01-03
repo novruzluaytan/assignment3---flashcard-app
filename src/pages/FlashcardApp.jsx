@@ -8,7 +8,8 @@ const FlashcardApp = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [showBackButton, setShowBackButton] = useState(false);
-  const [searchedItemPage, setSearchedItemPage] = useState(1);
+  const [newCardQuestion, setNewCardQuestion] = useState('');
+  const [newCardAnswer, setNewCardAnswer] = useState('');
 
   useEffect(() => {
     fetchFlashcards();
@@ -53,6 +54,23 @@ const FlashcardApp = () => {
     setFlashcards(updatedFlashcards);
   };
 
+
+
+  const addNewCard = () => {
+    const newCard = {
+      id: flashcards.length + 1, // Assuming each card has a unique id
+      question: newCardQuestion,
+      answer: newCardAnswer,
+      flipped: false,
+      status: '', // Set the initial status as empty
+      lastModified: new Date().toLocaleString(), // Set the last modified time
+    };
+
+    const updatedFlashcards = [...flashcards, newCard];
+    setFlashcards(updatedFlashcards);
+    setNewCardQuestion('');
+    setNewCardAnswer('');
+  };
 
   const displayPagination = () => {
     const totalPages = Math.ceil(flashcards.length / 6);
@@ -100,8 +118,6 @@ const FlashcardApp = () => {
     setShowBackButton(false); // Hide the back button
     setSearchTerm(''); // Clear the search term
   };
-
-
 
   return (
     <>
