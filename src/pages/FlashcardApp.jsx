@@ -81,22 +81,34 @@ const FlashcardApp = () => {
   const handleAddFlashcard = async () => {
     const newQuestion = prompt('Enter the question:');
     const newAnswer = prompt('Enter the answer:');
-
+  
     if (newQuestion !== null && newAnswer !== null) {
       const newFlashcard = {
-        id: flashcards.length + 1,
         question: newQuestion,
         answer: newAnswer,
         lastModified: new Date().toLocaleString('en-US', { timeZone: 'Asia/Baku' }),
       };
-
-      const updatedFlashcards = [...flashcards, newFlashcard];
-
-      setFlashcards(updatedFlashcards);
-      setOriginalFlashcards(updatedFlashcards);
+  
+      try {
+        const response = await fetch('http://localhost:3001/flashcards', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newFlashcard),
+        });
+  
+        if (response.ok) {
+          // Fetch the updated flashcards from the server
+          fetchFlashcards();
+        } else {
+          console.error('Failed to add flashcard on the server.');
+        }
+      } catch (error) {
+        console.error('Error adding flashcard:', error);
+      }
     }
   };
-
 
   const handleMouseEnter = (card) => {
     setHoveredCardId(card.id);
@@ -109,8 +121,12 @@ const FlashcardApp = () => {
   const displayFlashcards = () => {
     const cardsPerPage = 6;
     const startIndex = (currentPage - 1) * cardsPerPage;
-
-    return flashcards.map((card, index) => {
+  
+    const sortedFlashcards = flashcards
+      .slice() // Create a shallow copy to avoid modifying the original array
+      .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+  
+    return sortedFlashcards.map((card, index) => {
       if (index >= startIndex && index < startIndex + cardsPerPage) {
         return (
           <div
@@ -123,9 +139,12 @@ const FlashcardApp = () => {
             {card.flipped ? card.answer : card.question}
             {hoveredCardId === card.id && (
               <div className="card-buttons">
-                <button onClick={() => handleEdit(card)}>Edit</button>
-                <button onClick={() => handleDelete(card)}>Delete</button>
+                <button onClick={() => handleEdit(card)} className='btn'>Edit</button>
+                <button onClick={() => handleDelete(card)} className='btn'>Delete</button>
               </div>
+            )}
+            {card.lastModified && (
+              <div className="last-modified">{`Last Modified: ${card.lastModified}`}</div>
             )}
           </div>
         );
@@ -133,6 +152,7 @@ const FlashcardApp = () => {
       return null; // Don't render if not in the current page range
     });
   };
+  
 
   const flipCard = (card) => {
     const updatedFlashcards = flashcards.map((c) =>
@@ -190,19 +210,21 @@ const FlashcardApp = () => {
   return (
     <>
       <Navbar />
-      <div className="app">
-        <div className="flashcard-container">{displayFlashcards()}</div>
-        <div className="pagination-container">{displayPagination()}</div>
-        <div className="search-container">
+      <div className="search-container">
           <input
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className='input-search'
           />
-          <button onClick={searchCards}>Search</button>
-          {showBackButton && <button onClick={goBack}>Back</button>}
+          <button onClick={searchCards} className='search-btn'>Search</button>
+          {showBackButton && <button onClick={goBack} className='back-btn'>Back</button>}
         </div>
+      <div className="app">
+        <div className="flashcard-container">{displayFlashcards()}</div>
+        <div className="pagination-container">{displayPagination()}</div>
+        
         <button className="add-flashcard-button" onClick={handleAddFlashcard}>
           +
         </button>
