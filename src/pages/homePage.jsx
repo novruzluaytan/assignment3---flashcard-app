@@ -6,7 +6,7 @@ import '../styles/HomePage.css';
 function HomePage() {
     return (
         <>
-            <Navbar />
+            
             <div className = "container">
                 <header>
                 <h1>Aytan Novruzlu - Portfolio</h1>

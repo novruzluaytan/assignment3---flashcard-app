@@ -67,7 +67,7 @@ margin-left:5%;
 }
 
 .card-buttons {
-  padding-top: 19%;
+  padding-top: 13%;
   padding-left:2%;
   position: relative;
   display: flex;
@@ -116,6 +116,11 @@ margin-left:5%;
   margin-left:1%;
 }
 
+.search-btn:hover,
+.back-btn:hover {
+  background-color: rgb(224, 224, 224);
+}
+
 .add-flashcard-button{
   width:10%;
   height:50px;
@@ -140,11 +145,67 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
 
 .container{
   background-color: beige;
+  width:100%;
+  height:fit-content;
 }
 
 .search{
   width:60%;
 }
+
 .option{
-  width:30%;
+  width:40%;
+  margin-top:1.5%;
+}
+
+label{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 15px;
+}
+
+#status{
+  margin-left:5%;
+  width:25%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 15px;
+}
+
+.submit-status{
+  margin-left:3%;
+  width:20%;
+  height: 30px;
+  cursor: pointer;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 15px;
+  background-color: white;
+  border:none;
+  border:1px solid black;
+}
+
+.submit-status:hover{
+  background-color: rgb(224, 224, 224);
+}
+
+.share-btn{
+  position: relative;
+  bottom:80px;
+  width:10%;
+  height:50%;
+  margin-left:85%;
+  margin-top:2%;
+  cursor: pointer;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 16px;
+  background-color: green;
+  border:none;
+  border:1px solid white;
+  color:white;
+  text-align: center;
+}
+
+.share-btn:hover{
+  background-color: white;
+  border:none;
+  border:1px solid green;
+  color:green;
 }

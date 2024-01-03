@@ -48,7 +48,6 @@ const ContactPage = () => {
     return (
         <>
             <div className='main'>
-                <Navbar />
                 <h1>Contact Me</h1>
                 <p>
                     Feel free to reach out through the contact me page for any inquiries, collaborations, or just to say hello!

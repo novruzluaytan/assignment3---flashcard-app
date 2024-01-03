@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from '../assets/Navbar.jsx'
 import '../styles/flashcard.css'
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const FlashcardApp = () => {
   const [flashcards, setFlashcards] = useState([]);
@@ -11,6 +13,7 @@ const FlashcardApp = () => {
   const [showBackButton, setShowBackButton] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
+  const [selectedCards, setSelectedCards] = useState([]);
 
 
 
@@ -81,7 +84,7 @@ const FlashcardApp = () => {
     }
   };
 
-  const handleAddFlashcard = async () => {
+  const handleAddFlashcard = useCallback(async () => {
     const newQuestion = prompt('Enter the question:');
     const newAnswer = prompt('Enter the answer:');
     const newStatus = prompt('Enter the status:'); // Add this line
@@ -113,7 +116,17 @@ const FlashcardApp = () => {
         console.error('Error adding flashcard:', error);
       }
     }
-  };
+  }, [statusFilter]);
+
+  const handleSendViaEmail = () => {
+    const selectedCardsData = flashcards.filter((card) => selectedCards.includes(card.id));
+    const jsonData = JSON.stringify(selectedCardsData, null, 2);
+
+    const mailto = `mailto:?subject=FlashCards&body=${encodeURIComponent(jsonData)}`;
+
+    window.location.href = mailto;
+};
+
 
 
   const handleMouseEnter = (card) => {
@@ -143,15 +156,16 @@ const FlashcardApp = () => {
             onMouseLeave={handleMouseLeave}
           >
             {card.flipped ? card.answer : card.question}
+            <div>{`Status: ${card.status}`}</div>
             {hoveredCardId === card.id && (
               <div className="card-buttons">
                 <button onClick={() => handleEdit(card)} className='btn'>Edit</button>
                 <button onClick={() => handleDelete(card)} className='btn'>Delete</button>
               </div>
             )}
-            {card.lastModified && (
+            
               <div className="last-modified">{`Last Modified: ${card.lastModified}`}</div>
-            )}
+          
           </div>
         );
       }
@@ -189,15 +203,11 @@ const FlashcardApp = () => {
   const searchCards = () => {
     const searchTermLowerCase = searchTerm.toLowerCase().trim();
 
-    if (searchTermLowerCase === '') {
+    if (searchTermLowerCase === '') { // bu ne demekdie amk hardan yazmisan bunu dsfjhsf
       setFlashcards(originalFlashcards);
     } else {
       const searchResults = originalFlashcards.filter(
-        (card) =>
-          (card.question.toLowerCase().includes(searchTermLowerCase) ||
-            card.answer.toLowerCase().includes(searchTermLowerCase)) &&
-          (!statusFilter || card.status.toLowerCase() === statusFilter.toLowerCase())
-      );
+        (card) => (card.status === statusFilter));
 
       setFlashcards(searchResults);
       setShowBackButton(true);
@@ -213,7 +223,7 @@ const FlashcardApp = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="container">
         <div className="search-container">
           <div className='search'>
@@ -231,17 +241,18 @@ const FlashcardApp = () => {
             <form action="/action_page.php">
               <label for="status">Choose a status:</label>
               <select id="status" name="status" onChange={(e) => setStatusFilter(e.target.value)}>
-                <option value="">All Statuses</option>
+                <option value="" >All Statuses</option>
                 <option value="learned">Learned</option>
                 <option value="wantToLearn">Want to Learn</option>
                 <option value="noted">Noted</option>
               </select>
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" className='submit-status' />
             </form>
           </div>
 
         </div>
         <button className="add-flashcard-button" onClick={handleAddFlashcard}>Click to Add More + </button>
+        <button onClick={handleSendViaEmail} className='share-btn'>Share Selected via Email</button>
         <div className="app">
           <div className="flashcard-container">{displayFlashcards()}</div>
           <div className="pagination-container">{displayPagination()}</div>

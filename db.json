@@ -22,12 +22,6 @@
       "status": "Want to Learn"
     },
     {
-      "question": "What is the capital of Azerbaijan?",
-      "answer": "Baku",
-      "id": 12,
-      "status": "Learned"
-    },
-    {
       "id": 13,
       "question": "What is the longest river in the world?",
       "answer": "Nile River",
@@ -56,11 +50,16 @@
       "status": "Noted"
     },
     {
-      "question": "capital of france",
-      "answer": "paris",
-      "lastModified": "1/3/2024, 8:00:26 PM",
-      "id": 29,
-      "status": "Learned"
+      "question": "What is the capital of Azerbaijan?",
+      "answer": "Baku",
+      "lastModified": "1/4/2024, 1:43:34 AM",
+      "status": "Learned",
+      "id": 30
+    },
+    {
+      "question": "What is the second big city of Azerbaijan?",
+      "answer": "Ganja",
+      "id": 32
     }
   ],
   "messages": [
