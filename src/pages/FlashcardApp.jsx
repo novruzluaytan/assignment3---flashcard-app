@@ -10,6 +10,9 @@ const FlashcardApp = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showBackButton, setShowBackButton] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('');
+
+
 
   useEffect(() => {
     fetchFlashcards();
@@ -81,14 +84,16 @@ const FlashcardApp = () => {
   const handleAddFlashcard = async () => {
     const newQuestion = prompt('Enter the question:');
     const newAnswer = prompt('Enter the answer:');
-  
-    if (newQuestion !== null && newAnswer !== null) {
+    const newStatus = prompt('Enter the status:'); // Add this line
+
+    if (newQuestion !== null && newAnswer !== null && newStatus !== null) {
       const newFlashcard = {
         question: newQuestion,
         answer: newAnswer,
         lastModified: new Date().toLocaleString('en-US', { timeZone: 'Asia/Baku' }),
+        status: newStatus, // Add this line
       };
-  
+
       try {
         const response = await fetch('http://localhost:3001/flashcards', {
           method: 'POST',
@@ -97,7 +102,7 @@ const FlashcardApp = () => {
           },
           body: JSON.stringify(newFlashcard),
         });
-  
+
         if (response.ok) {
           // Fetch the updated flashcards from the server
           fetchFlashcards();
@@ -110,6 +115,7 @@ const FlashcardApp = () => {
     }
   };
 
+
   const handleMouseEnter = (card) => {
     setHoveredCardId(card.id);
   };
@@ -121,11 +127,11 @@ const FlashcardApp = () => {
   const displayFlashcards = () => {
     const cardsPerPage = 6;
     const startIndex = (currentPage - 1) * cardsPerPage;
-  
+
     const sortedFlashcards = flashcards
       .slice() // Create a shallow copy to avoid modifying the original array
       .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
-  
+
     return sortedFlashcards.map((card, index) => {
       if (index >= startIndex && index < startIndex + cardsPerPage) {
         return (
@@ -152,7 +158,7 @@ const FlashcardApp = () => {
       return null; // Don't render if not in the current page range
     });
   };
-  
+
 
   const flipCard = (card) => {
     const updatedFlashcards = flashcards.map((c) =>
@@ -188,43 +194,60 @@ const FlashcardApp = () => {
     } else {
       const searchResults = originalFlashcards.filter(
         (card) =>
-          card.question.toLowerCase().includes(searchTermLowerCase) ||
-          card.answer.toLowerCase().includes(searchTermLowerCase)
+          (card.question.toLowerCase().includes(searchTermLowerCase) ||
+            card.answer.toLowerCase().includes(searchTermLowerCase)) &&
+          (!statusFilter || card.status.toLowerCase() === statusFilter.toLowerCase())
       );
 
       setFlashcards(searchResults);
       setShowBackButton(true);
-      setCurrentPage(1); 
+      setCurrentPage(1);
     }
   };
 
+
+
   const goBack = () => {
     setFlashcards(originalFlashcards);
-    setShowBackButton(false); 
-    setSearchTerm(''); 
+    setShowBackButton(false);
+    setSearchTerm('');
   };
 
   return (
     <>
       <Navbar />
-      <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className='input-search'
-          />
-          <button onClick={searchCards} className='search-btn'>Search</button>
-          {showBackButton && <button onClick={goBack} className='back-btn'>Back</button>}
+      <div className="container">
+        <div className="search-container">
+          <div className='search'>
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className='input-search'
+            />
+            <button onClick={searchCards} className='search-btn'>Search</button>
+            {showBackButton && <button onClick={goBack} className='back-btn'>Back</button>}
+          </div>
+          <div className='option'>
+            <form action="/action_page.php">
+              <label for="status">Choose a status:</label>
+              <select id="status" name="status" onChange={(e) => setStatusFilter(e.target.value)}>
+                <option value="">All Statuses</option>
+                <option value="learned">Learned</option>
+                <option value="wantToLearn">Want to Learn</option>
+                <option value="noted">Noted</option>
+              </select>
+              <input type="submit" value="Submit" />
+            </form>
+          </div>
+
         </div>
-      <div className="app">
-        <div className="flashcard-container">{displayFlashcards()}</div>
-        <div className="pagination-container">{displayPagination()}</div>
-        
-        <button className="add-flashcard-button" onClick={handleAddFlashcard}>
-          +
-        </button>
+        <button className="add-flashcard-button" onClick={handleAddFlashcard}>Click to Add More + </button>
+        <div className="app">
+          <div className="flashcard-container">{displayFlashcards()}</div>
+          <div className="pagination-container">{displayPagination()}</div>
+        </div>
       </div>
     </>
   );
