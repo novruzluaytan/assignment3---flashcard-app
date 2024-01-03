@@ -25,30 +25,78 @@ const FlashcardApp = () => {
       console.error('Error fetching flashcards:', error);
     }
   };
-
-  const handleEdit = (card) => {
+  const handleEdit = async (card) => {
     const updatedQuestion = prompt('Edit the question:', card.question);
     const updatedAnswer = prompt('Edit the answer:', card.answer);
-  
+
     if (updatedQuestion !== null && updatedAnswer !== null) {
-      const updatedFlashcards = flashcards.map((c) =>
-        c.id === card.id ? { ...c, question: updatedQuestion, answer: updatedAnswer } : c
-      );
-  
-      setFlashcards(updatedFlashcards);
-      setOriginalFlashcards(updatedFlashcards); // Update the original flashcards as well
+      try {
+        const response = await fetch(`http://localhost:3001/flashcards/${card.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ question: updatedQuestion, answer: updatedAnswer }),
+        });
+
+        if (response.ok) {
+          const updatedFlashcards = flashcards.map((c) =>
+            c.id === card.id ? { ...c, question: updatedQuestion, answer: updatedAnswer } : c
+          );
+
+          setFlashcards(updatedFlashcards);
+          setOriginalFlashcards(updatedFlashcards);
+        } else {
+          console.error('Failed to update flashcard on the server.');
+        }
+      } catch (error) {
+        console.error('Error updating flashcard:', error);
+      }
     }
   };
-  
-  const handleDelete = (card) => {
+
+  const handleDelete = async (card) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this flashcard?');
-  
+
     if (confirmDelete) {
-      const updatedFlashcards = flashcards.filter((c) => c.id !== card.id);
-      setFlashcards(updatedFlashcards);
-      setOriginalFlashcards(updatedFlashcards); // Update the original flashcards as well
+      try {
+        const response = await fetch(`http://localhost:3001/flashcards/${card.id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          const updatedFlashcards = flashcards.filter((c) => c.id !== card.id);
+
+          setFlashcards(updatedFlashcards);
+          setOriginalFlashcards(updatedFlashcards);
+        } else {
+          console.error('Failed to delete flashcard on the server.');
+        }
+      } catch (error) {
+        console.error('Error deleting flashcard:', error);
+      }
     }
   };
+
+  const handleAddFlashcard = async () => {
+    const newQuestion = prompt('Enter the question:');
+    const newAnswer = prompt('Enter the answer:');
+
+    if (newQuestion !== null && newAnswer !== null) {
+      const newFlashcard = {
+        id: flashcards.length + 1,
+        question: newQuestion,
+        answer: newAnswer,
+        lastModified: new Date().toLocaleString('en-US', { timeZone: 'Asia/Baku' }),
+      };
+
+      const updatedFlashcards = [...flashcards, newFlashcard];
+
+      setFlashcards(updatedFlashcards);
+      setOriginalFlashcards(updatedFlashcards);
+    }
+  };
+
 
   const handleMouseEnter = (card) => {
     setHoveredCardId(card.id);
@@ -115,7 +163,7 @@ const FlashcardApp = () => {
 
   const searchCards = () => {
     const searchTermLowerCase = searchTerm.toLowerCase().trim();
-  
+
     if (searchTermLowerCase === '') {
       // If the search term is empty, show all flashcards
       setFlashcards(originalFlashcards);
@@ -126,7 +174,7 @@ const FlashcardApp = () => {
           card.question.toLowerCase().includes(searchTermLowerCase) ||
           card.answer.toLowerCase().includes(searchTermLowerCase)
       );
-  
+
       setFlashcards(searchResults);
       setShowBackButton(true);
       setCurrentPage(1); // Reset to the first page when searching
@@ -155,6 +203,9 @@ const FlashcardApp = () => {
           <button onClick={searchCards}>Search</button>
           {showBackButton && <button onClick={goBack}>Back</button>}
         </div>
+        <button className="add-flashcard-button" onClick={handleAddFlashcard}>
+          +
+        </button>
       </div>
     </>
   );
