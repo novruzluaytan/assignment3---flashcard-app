@@ -6,10 +6,10 @@ const FlashcardApp = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [originalFlashcards, setOriginalFlashcards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [flashcardsPerPage] = useState(6);
   const [searchTerm, setSearchTerm] = useState('');
   const [showBackButton, setShowBackButton] = useState(false);
-  const [newCardQuestion, setNewCardQuestion] = useState('');
-  const [newCardAnswer, setNewCardAnswer] = useState('');
+  const [hoveredCardId, setHoveredCardId] = useState(null);
 
   useEffect(() => {
     fetchFlashcards();
@@ -26,6 +26,38 @@ const FlashcardApp = () => {
     }
   };
 
+  const handleEdit = (card) => {
+    const updatedQuestion = prompt('Edit the question:', card.question);
+    const updatedAnswer = prompt('Edit the answer:', card.answer);
+  
+    if (updatedQuestion !== null && updatedAnswer !== null) {
+      const updatedFlashcards = flashcards.map((c) =>
+        c.id === card.id ? { ...c, question: updatedQuestion, answer: updatedAnswer } : c
+      );
+  
+      setFlashcards(updatedFlashcards);
+      setOriginalFlashcards(updatedFlashcards); // Update the original flashcards as well
+    }
+  };
+  
+  const handleDelete = (card) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this flashcard?');
+  
+    if (confirmDelete) {
+      const updatedFlashcards = flashcards.filter((c) => c.id !== card.id);
+      setFlashcards(updatedFlashcards);
+      setOriginalFlashcards(updatedFlashcards); // Update the original flashcards as well
+    }
+  };
+
+  const handleMouseEnter = (card) => {
+    setHoveredCardId(card.id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCardId(null);
+  };
+
   const displayFlashcards = () => {
     const cardsPerPage = 6;
     const startIndex = (currentPage - 1) * cardsPerPage;
@@ -37,12 +69,19 @@ const FlashcardApp = () => {
             key={card.id}
             className={`flashcard ${card.flipped ? 'flipped' : ''}`}
             onClick={() => flipCard(card)}
+            onMouseEnter={() => handleMouseEnter(card)}
+            onMouseLeave={handleMouseLeave}
           >
             {card.flipped ? card.answer : card.question}
+            {hoveredCardId === card.id && (
+              <div className="card-buttons">
+                <button onClick={() => handleEdit(card)}>Edit</button>
+                <button onClick={() => handleDelete(card)}>Delete</button>
+              </div>
+            )}
           </div>
         );
       }
-
       return null; // Don't render if not in the current page range
     });
   };
@@ -55,25 +94,8 @@ const FlashcardApp = () => {
   };
 
 
-
-  const addNewCard = () => {
-    const newCard = {
-      id: flashcards.length + 1, // Assuming each card has a unique id
-      question: newCardQuestion,
-      answer: newCardAnswer,
-      flipped: false,
-      status: '', // Set the initial status as empty
-      lastModified: new Date().toLocaleString(), // Set the last modified time
-    };
-
-    const updatedFlashcards = [...flashcards, newCard];
-    setFlashcards(updatedFlashcards);
-    setNewCardQuestion('');
-    setNewCardAnswer('');
-  };
-
   const displayPagination = () => {
-    const totalPages = Math.ceil(flashcards.length / 6);
+    const totalPages = Math.ceil(flashcards.length / flashcardsPerPage);
     const paginationButtons = [];
 
     for (let i = 1; i <= totalPages; i++) {
@@ -110,8 +132,6 @@ const FlashcardApp = () => {
       setCurrentPage(1); // Reset to the first page when searching
     }
   };
-  
-
 
   const goBack = () => {
     setFlashcards(originalFlashcards);
