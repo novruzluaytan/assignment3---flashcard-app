@@ -177,7 +177,6 @@ const FlashcardApp = () => {
         </button>
       );
     }
-
     return paginationButtons;
   };
 
@@ -185,10 +184,8 @@ const FlashcardApp = () => {
     const searchTermLowerCase = searchTerm.toLowerCase().trim();
 
     if (searchTermLowerCase === '') {
-      // If the search term is empty, show all flashcards
       setFlashcards(originalFlashcards);
     } else {
-      // Filter flashcards based on the search term
       const searchResults = originalFlashcards.filter(
         (card) =>
           card.question.toLowerCase().includes(searchTermLowerCase) ||
@@ -197,14 +194,14 @@ const FlashcardApp = () => {
 
       setFlashcards(searchResults);
       setShowBackButton(true);
-      setCurrentPage(1); // Reset to the first page when searching
+      setCurrentPage(1); 
     }
   };
 
   const goBack = () => {
     setFlashcards(originalFlashcards);
-    setShowBackButton(false); // Hide the back button
-    setSearchTerm(''); // Clear the search term
+    setShowBackButton(false); 
+    setSearchTerm(''); 
   };
 
   return (
