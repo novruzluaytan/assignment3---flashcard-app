@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/assignment3---flashcard-app/static/css/main.01a9d507.css",
+    "main.js": "/assignment3---flashcard-app/static/js/main.52c7bde7.js",
+    "index.html": "/assignment3---flashcard-app/index.html",
+    "main.01a9d507.css.map": "/assignment3---flashcard-app/static/css/main.01a9d507.css.map",
+    "main.52c7bde7.js.map": "/assignment3---flashcard-app/static/js/main.52c7bde7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01a9d507.css",
+    "static/js/main.52c7bde7.js"
+  ]
+}
