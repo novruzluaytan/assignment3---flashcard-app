@@ -136,14 +136,17 @@ const FlashcardApp = () => {
     setHoveredCardId(null);
   };
 
+  
+
   const displayFlashcards = () => {
     const cardsPerPage = 6;
     const startIndex = (currentPage - 1) * cardsPerPage;
-
+  
     const sortedFlashcards = flashcards
       .slice() // Create a shallow copy to avoid modifying the original array
-      .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
-
+      .sort((a, b) => new Date(a.lastModified) - new Date(b.lastModified))
+      .reverse(); // Reverse the order to display from most recent to oldest
+  
     return sortedFlashcards.map((card, index) => {
       if (index >= startIndex && index < startIndex + cardsPerPage) {
         return (
@@ -171,7 +174,7 @@ const FlashcardApp = () => {
       return null; // Don't render if not in the current page range
     });
   };
-
+  
 
   const flipCard = (card) => {
     const updatedFlashcards = flashcards.map((c) =>
@@ -262,3 +265,5 @@ const FlashcardApp = () => {
 }
 
 export default FlashcardApp;
+
+
