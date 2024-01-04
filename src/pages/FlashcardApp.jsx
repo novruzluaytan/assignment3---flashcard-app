@@ -16,7 +16,6 @@ const FlashcardApp = () => {
   const [selectedCards, setSelectedCards] = useState([]);
 
 
-
   useEffect(() => {
     fetchFlashcards();
   }, []);
